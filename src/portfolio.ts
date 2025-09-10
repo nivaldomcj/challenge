@@ -41,8 +41,8 @@ export class Portfolio {
   }
 
   private processBuy(unitCost: number, quantity: number): TaxResult {
-    this.currentShares += quantity
     this.updateWeightedAveragePrice(unitCost, quantity)
+    this.currentShares += quantity
 
     return { tax: 0 }
   }
