@@ -1,6 +1,9 @@
 import type { Operation, TaxResult } from "./types";
 import { roundNumber } from "./utils";
 
+const TAX_RATE = 0.2
+const EXEMPT_AMOUNT = 20000
+
 export class Portfolio {
   private weightedAveragePrice: number = 0
   private currentShares: number = 0
@@ -18,7 +21,7 @@ export class Portfolio {
   }
 
   private isExempt(unitCost: number, quantity: number): boolean {
-    return unitCost * quantity <= 20000
+    return unitCost * quantity <= EXEMPT_AMOUNT
   }
 
   private processSell(unitCost: number, quantity: number): TaxResult {
@@ -37,7 +40,7 @@ export class Portfolio {
     const taxableProfit = profit - lossToUse
 
     this.accumulatedLoss -= lossToUse
-    return { tax: roundNumber(taxableProfit * 0.2) }
+    return { tax: roundNumber(taxableProfit * TAX_RATE) }
   }
 
   private processBuy(unitCost: number, quantity: number): TaxResult {
